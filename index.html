@@ -3,113 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
     <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Afacad Flux", sans-serif;
+            background-color: pink;
+            font-size: 1.2rem;
+        }
+
+        .forminput{
+            width: 50%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            padding: 5rem;
+            background-color: pink;
+        }
+
+        .forminput h1{
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .forminput input {
+            background-color: #fff;
+            border: 3px solid black;
+            border-radius: 5px;
+            padding: 1rem;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        .forminput ul li img{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        .forminput ul{
+            list-style: none;
+            margin: 1rem;
+        }
+
+        button {
+            color: #fff;
+            background-color: rgb(8, 8, 8);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        img {
+            max-width: 500px;
+            width: 100%;
+            max-height: 500px;
+            height: 100%;
+            border-radius: 25px;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        .textoutput {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 2rem;
+        }
+
+        .textoutput h3, h2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+        }
+        
+        
+    </style>
 </head>
 <body>
     
-    <h1>Shopping Cart</h1>
-
-    <!-- Product Form -->
-    <div class="product-form">
-        <h2>Product Form</h2>
-        <input type="text" id="productName" placeholder="Product Name"> 
-        <input type="number" id="productPrice" placeholder="Price">
-        <input type="text" id="productImage" placeholder="Image URL">
-        <button onclick="createProduct()">Create Product</button>
-    </div>
-
-    <!-- Product Dashboard -->
-    <div class="product-dashboard">
-        <h2>Product Dashboard</h2>
-        <div id="productList"></div>
-    </div>
-
-    <!-- Cart Section -->
-    <div class="cart-section">
-        <h2>Product Form</h2>
-        <div id="cartList"></div>
-        <button onclick="calculateTotal()">Calculate Final Price</button>
-        <p class="cart-total">You have to pay: <span id="totalPrice">0</span></p>
+    <div class="forminput">
+        <div class="todolist">
+            <h1>TO DO LIST</h1>
+        </div>
+            <input id="text" type="text" placeholder="Add Text..."><br>
+            <input id="price" type="number" placeholder="Add price..."><br>
+            <input id="url" type="url" placeholder="Add URL image..."><br>
+            <button onclick="addtask()">Submit</button>
+        
+            <ul id="ul" class="showinput"></ul>
     </div>
 
     <script>
-        let products = [];
-let cart = [];
 
-function createProduct() {
-    const name = document.getElementById('productName').value;
-    const price = document.getElementById('productPrice').value;
-    const image = document.getElementById('productImage').value;
+        let items = [];
+        let idCount = 0;
 
-    const product = {
-        name,
-        price,
-        image
-    };
+        function addtask(){
+            const text = document.getElementById('text');
+            const textValue = text.value;
+            const url = document.getElementById('url');
+            const urlValue = url.value;
+            const price = document.getElementById('price')
+            const priceValue = price.value;
 
-    products.push(product);
-    displayProducts();
-}
-
-function displayProducts() {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = '';
-
-    products.forEach((product, index) => {
-        const productItem = document.createElement('div');
-        productItem.className = 'product-item';
-        productItem.innerHTML = `
-            <input type="checkbox" id="product-${index}" />
-            <img src="${product.image}" alt="${product.name}" />
-            <span>${product.name}</span>
-            <span>$${product.price}</span>
-        `;
-        productList.appendChild(productItem);
-
-        // Add to cart logic
-        document.getElementById(`product-${index}`).addEventListener('change', function () {
-            if (this.checked) {
-                addToCart(product);
-            } else {
-                removeFromCart(product);
+            if(textValue === '' && priceValue === '' && urlValue === ''){
+                alert('Plese Add text and Url image');
+                return;
             }
-        });
-    });
-}
 
-function addToCart(product) {
-    cart.push(product);
-    displayCart();
-}
+            const item = {
+                id : idCount++,
+                text : textValue,
+                price : priceValue,
+                img : urlValue
+            }
+            items.push(item)
 
-function removeFromCart(product) {
-    cart = cart.filter(item => item !== product);
-    displayCart();
-}
+            const ul = document.getElementById('ul');
+            const li = document.createElement('li');
+            li.id = `${item.id}`;
 
-function displayCart() {
-    const cartList = document.getElementById('cartList');
-    cartList.innerHTML = '';
+            li.innerHTML = `
+                <img src="${urlValue}">
+                <div class="textoutput">
+                <h3>${textValue}</h3>
+                <h2>$${priceValue}</h2>
+                <button onclick="remove(${item.id})">Remove</button>
+                </div>
+            `;
+            ul.appendChild(li);
 
-    cart.forEach((product, index) => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" />
-            <span>${product.name}</span>
-            <span>$${product.price}</span>
-            <button onclick="removeFromCart(${index})">Remove</button>
-        `;
-        cartList.appendChild(cartItem);
-    });
-}
+            text.value = '';
+            url.value = '';
+            price.value = '';
+            console.log(items);
+        }
 
-function calculateTotal() {
-    const total = cart.reduce((sum, product) => sum + parseFloat(product.price), 0);
-    document.getElementById('totalPrice').innerText = total;
-}
+        function remove(id){
+            items =items.filter(item =>item.id !== id);
+            const li = document.getElementById(id)
+            li.remove()
+            console.log(items);
+        }
 
-</script>
+    </script>
 
 </body>
 </html>
