@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
     <title>Document</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: "Afacad Flux", sans-serif;
-            background-color: pink;
+            background-color: rgb(0, 0, 59);
             font-size: 1.2rem;
         }
 
-        .forminput{
+        .forminput {
             width: 50%;
             height: 50%;
             display: flex;
@@ -24,12 +25,13 @@
             align-items: center;
             margin: auto;
             padding: 5rem;
-            background-color: pink;
+            background-color: rgb(0, 0, 59);
         }
 
-        .forminput h1{
+        .forminput h1 {
             font-size: 2rem;
             margin: 1rem 0;
+            color: #fff;
         }
 
         .forminput input {
@@ -40,15 +42,15 @@
             box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
         }
 
-        .forminput ul li img{
+        .forminput ul li img {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            
+
         }
 
-        .forminput ul{
+        .forminput ul {
             list-style: none;
             margin: 1rem;
         }
@@ -77,29 +79,30 @@
             margin: 2rem;
         }
 
-        .textoutput h3, h2 {
+        .textoutput h3,
+        h2 {
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.8rem;
             margin: 0.5rem 0;
+            color: #fff;
         }
-        
-        
     </style>
 </head>
+
 <body>
-    
+
     <div class="forminput">
         <div class="todolist">
             <h1>TO DO LIST</h1>
         </div>
-            <input id="text" type="text" placeholder="Add Text..."><br>
-            <input id="price" type="number" placeholder="Add price..."><br>
-            <input id="url" type="url" placeholder="Add URL image..."><br>
-            <button onclick="addtask()">Submit</button>
-        
-            <ul id="ul" class="showinput"></ul>
+        <input id="text" type="text" placeholder="Add Text..."><br>
+        <input id="price" type="number" placeholder="Add price..."><br>
+        <input id="url" type="url" placeholder="Add URL image..."><br>
+        <button onclick="addtask()">Submit</button>
+
+        <ul id="ul" class="showinput"></ul>
     </div>
 
     <script>
@@ -107,7 +110,7 @@
         let items = [];
         let idCount = 0;
 
-        function addtask(){
+        function addtask() {
             const text = document.getElementById('text');
             const textValue = text.value;
             const url = document.getElementById('url');
@@ -115,16 +118,16 @@
             const price = document.getElementById('price')
             const priceValue = price.value;
 
-            if(textValue === '' && priceValue === '' && urlValue === ''){
+            if (textValue === '' && priceValue === '' && urlValue === '') {
                 alert('Plese Add text and Url image');
                 return;
             }
 
             const item = {
-                id : idCount++,
-                text : textValue,
-                price : priceValue,
-                img : urlValue
+                id: idCount++,
+                text: textValue,
+                price: priceValue,
+                img: urlValue
             }
             items.push(item)
 
@@ -148,8 +151,8 @@
             console.log(items);
         }
 
-        function remove(id){
-            items =items.filter(item =>item.id !== id);
+        function remove(id) {
+            items = items.filter(item => item.id !== id);
             const li = document.getElementById(id)
             li.remove()
             console.log(items);
@@ -158,4 +161,5 @@
     </script>
 
 </body>
+
 </html>
